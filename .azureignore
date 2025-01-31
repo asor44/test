@@ -1,39 +1,50 @@
-# Use the same rules as .gitignore
-!.gitignore
+# Exclude everything by default
+*
+**/*
 
-# Development directories
-/mobile/
-/.streamlit/
-/__pycache__/
-/.venv/
-/node_modules/
-/attached_assets/
-/.git/
-/.cache/
-/.config/
-/.local/
-/.upm/
-/.pythonlibs/
-
-# Development files
-*.pyc
-.gitignore
-.env
-*.log
-package-lock.json
-yarn.lock
-generated-icon.png
-pyproject.toml
-.replit
-replit.nix
-uv.lock
-
-# Explicitly keep required files
+# Explicitly include only required files
 !requirements.txt
-!static/footer.html
-!static/style.css
-!pages/*.py
 !main.py
 !database.py
 !models.py
 !utils.py
+!pages/*.py
+!static/footer.html
+!static/style.css
+
+# Ensure cache directories are excluded
+**/__pycache__/
+**/.cache/
+**/.pythonlibs/
+**/.upm/
+**/.local/
+**/.config/
+**/.streamlit/
+**/.git/
+**/node_modules/
+
+# Python cache files
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.dylib
+
+# Development files
+.Python
+.env
+.venv
+*.log
+.replit
+replit.nix
+pyproject.toml
+uv.lock
+package.json
+package-lock.json
+
+# Generated files
+*.map
+*-dev.js
+*.development.js
+generated-icon.png
