@@ -1,0 +1,39 @@
+# Use the same rules as .gitignore
+!.gitignore
+
+# Development directories
+/mobile/
+/.streamlit/
+/__pycache__/
+/.venv/
+/node_modules/
+/attached_assets/
+/.git/
+/.cache/
+/.config/
+/.local/
+/.upm/
+/.pythonlibs/
+
+# Development files
+*.pyc
+.gitignore
+.env
+*.log
+package-lock.json
+yarn.lock
+generated-icon.png
+pyproject.toml
+.replit
+replit.nix
+uv.lock
+
+# Explicitly keep required files
+!requirements.txt
+!static/footer.html
+!static/style.css
+!pages/*.py
+!main.py
+!database.py
+!models.py
+!utils.py
