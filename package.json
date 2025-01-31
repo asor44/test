@@ -1,25 +1,22 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "@inertiajs/inertia": "^0.11.0",
-        "@inertiajs/inertia-vue3": "^0.6.0",
-        "@inertiajs/progress": "^0.2.7",
-        "@tailwindcss/forms": "^0.5.3",
-        "@vitejs/plugin-vue": "^4.0.0",
-        "autoprefixer": "^10.4.12",
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "lodash": "^4.17.19",
-        "postcss": "^8.4.18",
-        "tailwindcss": "^3.2.1",
-        "vite": "^4.0.0",
-        "vue": "^3.2.41"
-    },
-    "engines": {
-        "node": "18"
-    }
+  "name": "workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/native-stack": "^7.2.0",
+    "expo": "^52.0.28",
+    "expo-barcode-scanner": "^13.0.1",
+    "expo-status-bar": "^2.0.1",
+    "react-native": "^0.77.0",
+    "react-native-safe-area-context": "^5.1.0",
+    "react-native-screens": "^4.5.0"
+  }
 }
