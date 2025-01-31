@@ -12,6 +12,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# Initialize session state
+if 'user' not in st.session_state:
+    st.session_state.user = None
+if 'authentication_status' not in st.session_state:
+    st.session_state.authentication_status = None
+
+# Initialize database
+database.init_db()
+
 # Charger le CSS personnalisé
 def load_css():
     css_file = Path("static/style.css").read_text()
@@ -24,7 +33,7 @@ def get_base64_encoded_image(image_path):
 
 # Charger le footer
 def load_footer():
-    # Get the encoded image
+    # Get the encoded logo
     encoded_logo = get_base64_encoded_image("attached_assets/orion_logo.png")
     footer_html = f'''
     <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f0f2f6; padding: 0.3rem; text-align: center;">
@@ -35,18 +44,6 @@ def load_footer():
     </div>
     '''
     st.markdown(footer_html, unsafe_allow_html=True)
-
-# Initialize session state
-if 'user' not in st.session_state:
-    st.session_state.user = None
-if 'authentication_status' not in st.session_state:
-    st.session_state.authentication_status = None
-
-# Initialize database
-database.init_db()
-
-# Charger le CSS
-load_css()
 
 def check_authentication():
     if not st.session_state.user:
@@ -117,6 +114,9 @@ def main_page():
         st.rerun()
 
 def main():
+    # Load CSS first
+    load_css()
+
     if not st.session_state.authentication_status:
         login()
     else:
