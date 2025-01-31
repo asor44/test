@@ -11,6 +11,10 @@
 !pages/*.py
 !static/footer.html
 !static/style.css
+!.streamlit/config.toml
+!startup.txt
+!attached_assets/orion_logo.png
+!attached_assets/téléchargement (1).jpg
 
 # Ensure cache directories are excluded
 **/__pycache__/
@@ -19,7 +23,6 @@
 **/.upm/
 **/.local/
 **/.config/
-**/.streamlit/
 **/.git/
 **/node_modules/
 
