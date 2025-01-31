@@ -5,6 +5,14 @@ import logging
 
 def get_connection():
     try:
+        # Vérifier si les variables d'environnement sont définies
+        required_vars = ['PGHOST', 'PGPORT', 'PGUSER', 'PGPASSWORD', 'PGDATABASE']
+        missing_vars = [var for var in required_vars if not os.getenv(var)]
+
+        if missing_vars:
+            raise ValueError(f"Variables d'environnement manquantes: {', '.join(missing_vars)}. "
+                           "Créez un fichier .env avec ces variables.")
+
         conn = psycopg2.connect(
             host=os.getenv('PGHOST'),
             port=os.getenv('PGPORT'),
@@ -13,8 +21,20 @@ def get_connection():
             database=os.getenv('PGDATABASE')
         )
         return conn
-    except Exception as e:
-        logging.error(f"Erreur de connexion à la base de données : {str(e)}")
+    except psycopg2.OperationalError as e:
+        if "Connection refused" in str(e):
+            error_msg = (
+                "Impossible de se connecter à PostgreSQL. Assurez-vous que :\n"
+                "1. PostgreSQL est installé sur votre machine\n"
+                "2. Le service PostgreSQL est démarré\n"
+                "3. Les informations de connexion dans le fichier .env sont correctes\n"
+                "\nPour installer PostgreSQL :\n"
+                "1. Téléchargez-le depuis https://www.postgresql.org/download/\n"
+                "2. Suivez les instructions d'installation\n"
+                "3. Créez un fichier .env avec les informations de connexion"
+            )
+            logging.error(error_msg)
+            raise RuntimeError(error_msg) from e
         raise
 
 def init_db():
@@ -197,7 +217,6 @@ def init_db():
                     ON CONFLICT (name) DO NOTHING
                 """, (name, min_rating, max_rating, description))
 
-
         # Insert default permissions
         default_permissions = [
             ('manage_users', 'Gérer les utilisateurs'),
@@ -270,10 +289,17 @@ def init_db():
 
         conn.commit()
 
+    except (RuntimeError, ValueError) as e:
+        # Ces erreurs ont déjà des messages détaillés
+        raise
     except Exception as e:
         logging.error(f"Erreur lors de l'initialisation de la base de données : {str(e)}")
-        conn.rollback()
-        raise
+        raise RuntimeError(
+            "Une erreur est survenue lors de l'initialisation de la base de données. "
+            "Vérifiez que PostgreSQL est correctement installé et configuré."
+        ) from e
     finally:
-        cur.close()
-        conn.close()
+        if 'cur' in locals():
+            cur.close()
+        if 'conn' in locals() and conn:
+            conn.close()
